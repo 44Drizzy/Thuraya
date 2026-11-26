@@ -92,7 +92,7 @@ input,select,textarea{font:inherit;color:var(--ink)}
 .chip-demo{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:rgba(212,162,58,.2);color:#F3D58E;padding:3px 8px;border-radius:999px}
 html[lang="ar"] .chip-demo{letter-spacing:0}
 
-.lift{margin-top:-48px;position:relative;z-index:1;display:grid;gap:14px;padding-bottom:24px}
+.lift{margin-top:-48px;position:relative;z-index:1;display:grid;gap:14px;padding-bottom:48px}
 .card{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line)}
 .budget-card{display:flex;align-items:center;gap:16px;padding:16px 18px;width:100%}
 .budget-card .meta{flex:1;min-width:0}
@@ -251,7 +251,7 @@ html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:13px}
 .send:disabled{opacity:.5}
 
 /* Nav */
-.nav{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;background:var(--surface);border-top:1px solid var(--line);padding-top:8px;padding-bottom:max(10px,env(safe-area-inset-bottom,0px));padding-left:max(8px,env(safe-area-inset-left,0px),calc((100% - 620px)/2));padding-right:max(8px,env(safe-area-inset-right,0px),calc((100% - 620px)/2))}
+.nav{position:relative;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;background:var(--surface);border-top:1px solid var(--line);padding-top:8px;padding-bottom:max(10px,env(safe-area-inset-bottom,0px));padding-left:max(8px,env(safe-area-inset-left,0px),calc((100% - 620px)/2));padding-right:max(8px,env(safe-area-inset-right,0px),calc((100% - 620px)/2))}
 .nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);padding:4px 0}
 .nav button[aria-current="page"]{color:var(--teal)}
 .nav .center{margin-top:-26px}
@@ -309,6 +309,41 @@ html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:13px}
 .splash.out{opacity:0;pointer-events:none}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}}
 @keyframes loadbar{from{transform:translateX(-100%)}to{transform:translateX(300%)}}
+
+/* Invest */
+.verdict{padding:18px;display:grid;gap:12px}
+.verdict .vh{display:flex;gap:12px;align-items:center}
+.verdict .vh .ri{width:46px;height:46px;border-radius:14px}
+.verdict .vh b{display:block;font-size:18px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.checks li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.ck{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none}
+.ck .ic{width:14px;height:14px}
+.ck.ok{background:var(--teal-soft);color:var(--teal)}
+.ck.no{background:var(--danger-soft);color:var(--danger)}
+.ask-inv{display:grid;gap:12px;padding:16px 18px}
+.ask-inv > b{font-size:16px}
+.answer{padding:12px 14px;border-radius:14px;font-size:14px}
+.answer.yes{background:var(--teal-soft)}
+.answer.part{background:var(--gold-soft)}
+.answer.no{background:var(--danger-soft)}
+.asset{padding:16px 18px;display:grid;gap:12px}
+.asset .hd{display:flex;align-items:center;gap:12px}
+.asset .hd .meta{flex:1;min-width:0;display:grid}
+.prices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.prices div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:2px}
+.prices span{font-size:12px;color:var(--muted)}
+.prices b{font-size:14px}
+.spark{width:100%;height:46px;display:block}
+.disclaimer{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted);padding:12px 14px;border-radius:14px;border:1px dashed var(--line);margin:0}
+.disclaimer .ic{width:18px;height:18px}
+/* Feedback & contact */
+.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);width:100%;min-height:110px;resize:vertical}
+.contact{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.contact .meta{flex:1;min-width:0}
+.contact .meta span{font-size:12.5px;color:var(--muted);display:block}
+.contact .meta b{display:block;overflow-wrap:anywhere;user-select:all}
+a.btn{text-decoration:none}
 
 /* Sheet */
 .sheet{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:flex-end}
@@ -444,7 +479,13 @@ const P = {
   wallet:"M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l12-4v4M17 14h.01",
   backpack:"M7 9a5 5 0 0 1 10 0v11a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1zM10 4.5V3h4v1.5M9 14h6v3H9z",
   trend:"M3 17l6-6 4 4 8-8M15 7h6v6",
-  calendar:"M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"
+  calendar:"M4 6h16v14H4zM4 10h16M8 3v4M16 3v4",
+  coins:"M12 8c4 0 7-1.3 7-3s-3-3-7-3-7 1.3-7 3 3 3 7 3zM5 5v5c0 1.7 3 3 7 3s7-1.3 7-3V5M5 10v5c0 1.7 3 3 7 3s7-1.3 7-3v-5M5 15v4c0 1.7 3 3 7 3s7-1.3 7-3v-4",
+  mail:"M3 6h18v12H3zM3 7l9 6 9-6",
+  chat:"M4 5h16v11H8l-4 4z",
+  info:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01",
+  copy:"M9 9h11v11H9zM5 15H4V4h11v1",
+  x:"M6 6l12 12M18 6L6 18"
 };
 const ic = (n, cls) => `<svg class="ic ${cls||""}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${P[n]||P.dots}"/></svg>`;
 const bot = (cls) => `<svg class="bot ${cls||""}" viewBox="0 0 48 48" aria-hidden="true"><use href="#bot"/></svg>`;
@@ -509,7 +550,32 @@ en:{
   trend:"Spending trend", trend_sub:"Last 6 months vs {b} budget", within:"Within budget", over:"Over budget", so_far:"This month so far",
   synced:"{bank} · synced just now", tagline:"Your Personal AI Financial Assistant",
   bnpl_title:"Pay-later apps", bnpl_sub:"Installment reminders only", bnpl_note:"Thuraya only reads your installment dates to remind you. You still pay inside Tabby or Deema.",
-  plan_done:"Last installment paid. Plan complete", linked_toast:"{p} linked. Installment reminders added"
+  plan_done:"Last installment paid. Plan complete", linked_toast:"{p} linked. Installment reminders added",
+  invest:"Invest", balance:"Account balance", balance_lbl:"Current account balance (KD)",
+  ready_yes:"You're ready to invest", ready_part:"You can start small", ready_no:"Not yet. Build your safety net first",
+  can_invest:"Available to invest now: {a}", monthly_inv:"After that, about {a} a month from your monthly surplus.",
+  chk_bills:"No overdue bills", chk_bnpl:"Pay-later installments under control ({a} left)", chk_safety:"Safety net covered: 3 months of essentials ({a})", chk_cash:"Money left after this month's bills and spending",
+  ask_inv:"Do I have enough to invest?", inv_in:"Invest in", inv_amount:"Amount (KD)", gold:"Gold", stocks:"Kuwaiti stocks", check:"Check",
+  w_gold:"gold", w_stocks:"Kuwaiti stocks",
+  ans_yes:"Yes. You can put {a} into {w} and still cover your bills, spending and safety net. You'd still have {r} available to invest.",
+  ans_part:"Partly. Only {r} is free to invest right now without touching your bills or safety net. Start with {r}, or save for about {m} more months to reach {a}.",
+  ans_part_nm:"Partly. Only {r} is free to invest right now without touching your bills or safety net. Start with that amount.",
+  ans_no:"Not yet. Investing {a} now would use money you need for bills or your safety net. Grow your emergency fund first.",
+  ans_overdue:"Not yet. Pay your overdue bills first, then check again.",
+  gold_note:"That's about {g} g of 24K gold at the example price.",
+  gold_t:"Gold", gold_sub:"Price per gram", k24:"24K", k22:"22K", k21:"21K",
+  stocks_t:"Boursa Kuwait", stocks_sub:"Premier Market index",
+  gold_how:"Buy gold bars or coins from licensed jewelers, or gold funds through your bank.",
+  stocks_how:"To buy Kuwaiti stocks you need an investment account with a licensed brokerage. Thuraya never buys or sells for you.",
+  example_prices:"Example prices",
+  inv_disc:"Thuraya isn't a licensed investment advisor. This checks whether you can afford to invest. It isn't advice to buy or sell anything. Speak to an advisor licensed by Kuwait's Capital Markets Authority before you invest.",
+  inv_disc_short:"Thuraya isn't a licensed advisor; for what to buy, ask an advisor licensed by the Capital Markets Authority.",
+  inv_home:"Invest in gold & stocks", inv_home_sub:"See if you're ready to invest", avail_short:"{a} available",
+  q6:"Do I have enough to invest in gold?",
+  inv_summary:"Right now about {a} is free to invest without touching your bills or safety net{m}.", inv_summary_m:", plus about {a} a month after that",
+  feedback:"Suggestions & complaints", fb_sug:"Suggestion", fb_comp:"Complaint", fb_msg:"Your message", fb_ph:"Tell us what we can do better…",
+  fb_send:"Send by email", fb_hint:"This opens your email app with your message ready to send to {e}.", fb_toast:"Opening your email app…", need_msg:"Write your message first.",
+  find_us:"Find us", email_l:"Email", social_l:"Social media", social_v:"@Thuraya.kw on Instagram, TikTok and X", copy:"Copy", copied:"Email address copied", write_us:"Email us"
 },
 ar:{
   greet_m:"صباح الخير", greet_a:"مساء الخير", greet_e:"مساء الخير",
@@ -568,7 +634,32 @@ ar:{
   trend:"اتجاه المصاريف", trend_sub:"آخر ٦ شهور مقارنة بميزانية {b}", within:"ضمن الميزانية", over:"فوق الميزانية", so_far:"هالشهر لين الحين",
   synced:"{bank} · تم التحديث الحين", tagline:"مساعدك المالي الشخصي بالذكاء الاصطناعي",
   bnpl_title:"تطبيقات الدفع لاحقاً", bnpl_sub:"تذكير بالأقساط فقط", bnpl_note:"ثريا بس تقرا مواعيد أقساطك عشان تذكرك. الدفع يظل داخل تابي أو ديما.",
-  plan_done:"دفعت آخر قسط. خلص الاشتراك", linked_toast:"انربط {p}. انضافت تذكيرات الأقساط"
+  plan_done:"دفعت آخر قسط. خلص الاشتراك", linked_toast:"انربط {p}. انضافت تذكيرات الأقساط",
+  invest:"الاستثمار", balance:"رصيد الحساب", balance_lbl:"رصيد الحساب الحالي (د.ك)",
+  ready_yes:"أنت جاهز تستثمر", ready_part:"تقدر تبدأ بمبلغ صغير", ready_no:"مو الحين. كوّن شبكة أمان أول",
+  can_invest:"المتاح للاستثمار الحين: {a}", monthly_inv:"وبعدها تقريباً {a} شهرياً من الفائض.",
+  chk_bills:"ما في فواتير متأخرة", chk_bnpl:"أقساط الدفع لاحقاً تحت السيطرة (باقي {a})", chk_safety:"شبكة الأمان مغطاة: ٣ شهور من المصاريف الأساسية ({a})", chk_cash:"فلوس باقية بعد فواتير ومصاريف هالشهر",
+  ask_inv:"عندي فلوس كافية أستثمر؟", inv_in:"أستثمر في", inv_amount:"المبلغ (د.ك)", gold:"الذهب", stocks:"أسهم كويتية", check:"شيّك",
+  w_gold:"الذهب", w_stocks:"الأسهم الكويتية",
+  ans_yes:"إيه. تقدر تحط {a} في {w} وتظل فواتيرك ومصاريفك وشبكة الأمان مغطاة. ويظل عندك {r} متاح للاستثمار.",
+  ans_part:"جزئياً. المتاح الحين {r} بس بدون ما تمس فواتيرك أو شبكة الأمان. ابدأ بـ {r}، أو ادخر تقريباً {m} شهور زيادة عشان توصل {a}.",
+  ans_part_nm:"جزئياً. المتاح الحين {r} بس بدون ما تمس فواتيرك أو شبكة الأمان. ابدأ بهالمبلغ.",
+  ans_no:"مو الحين. لو استثمرت {a} الحين بتاخذ من فلوس تحتاجها للفواتير أو شبكة الأمان. كبّر صندوق الطوارئ أول.",
+  ans_overdue:"مو الحين. سدد الفواتير المتأخرة أول، وبعدين شيّك مرة ثانية.",
+  gold_note:"يعني تقريباً {g} غرام ذهب عيار ٢٤ بالسعر التجريبي.",
+  gold_t:"الذهب", gold_sub:"سعر الغرام", k24:"عيار ٢٤", k22:"عيار ٢٢", k21:"عيار ٢١",
+  stocks_t:"بورصة الكويت", stocks_sub:"مؤشر السوق الأول",
+  gold_how:"تقدر تشتري سبايك أو ليرات ذهب من محلات مرخصة، أو صناديق ذهب عن طريق بنكك.",
+  stocks_how:"عشان تشتري أسهم كويتية تحتاج حساب استثماري عند شركة وساطة مرخصة. ثريا ما تبيع ولا تشتري عنك.",
+  example_prices:"أسعار تجريبية",
+  inv_disc:"ثريا مو مستشار استثمار مرخص. هذا الفحص يبين إذا تقدر تستثمر، ومو نصيحة تشتري أو تبيع أي شي. كلّم مستشار مرخص من هيئة أسواق المال قبل لا تستثمر.",
+  inv_disc_short:"ثريا مو مستشار مرخص؛ عشان تعرف شنو تشتري، كلّم مستشار مرخص من هيئة أسواق المال.",
+  inv_home:"استثمر في الذهب والأسهم", inv_home_sub:"شوف إذا أنت جاهز تستثمر", avail_short:"متاح {a}",
+  q6:"عندي فلوس كافية أستثمر في الذهب؟",
+  inv_summary:"الحين تقريباً {a} متاح للاستثمار بدون ما تمس فواتيرك أو شبكة الأمان{m}.", inv_summary_m:"، وبعدها تقريباً {a} شهرياً",
+  feedback:"الاقتراحات والشكاوى", fb_sug:"اقتراح", fb_comp:"شكوى", fb_msg:"رسالتك", fb_ph:"قول لنا شنو نقدر نحسّن…",
+  fb_send:"أرسل بالإيميل", fb_hint:"بيفتح تطبيق الإيميل ورسالتك جاهزة تنرسل إلى {e}.", fb_toast:"قاعد يفتح تطبيق الإيميل…", need_msg:"اكتب رسالتك أول.",
+  find_us:"تواصل معنا", email_l:"الإيميل", social_l:"حساباتنا", social_v:"@Thuraya.kw على إنستغرام وتيك توك وإكس", copy:"نسخ", copied:"انتسخ الإيميل", write_us:"راسلنا"
 }};
 const CAT = {
   rent:{ess:1,icon:"home",en:"Rent",ar:"إيجار"},
@@ -641,7 +732,7 @@ function seed(){
   const tx=(amount,cat,day,en,ar)=>({id:nid(),amount,cat,date:md(day),note:{en,ar}});
   return {
     v:2, lang:"en", theme:"auto", name:"Sara", income:900, budget:600, essPct:70, plan:"basic",
-    banks:["nbk"], bnpl:["tabby"], chat:[], seenNotif:false,
+    banks:["nbk"], bnpl:["tabby"], cash:1450, chat:[], seenNotif:false,
     history:[585,612,548,694,571].map((v,i)=>({m:iso(new Date(y,m-5+i,1)),total:v})),
     txns:[
       tx(180,"rent",1,"Apartment rent","إيجار الشقة"),
@@ -688,7 +779,7 @@ function seed(){
 let S;
 function load(){
   let s=null; try{ s=JSON.parse(localStorage.getItem(KEY)); }catch(e){}
-  if(s && s.v===2) return s;
+  if(s && s.v===2){ if(s.cash==null) s.cash=1450; return s; }
   const n=seed(); if(s && s.lang){ n.lang=s.lang; n.theme=s.theme||"auto"; } return n;
 }
 function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){ try{ const c={...S,receipts:S.receipts.map(r=>({...r,img:undefined}))}; localStorage.setItem(KEY, JSON.stringify(c)); }catch(e2){} } }
@@ -786,6 +877,7 @@ function vHome(){
       <button class="tile" data-go="reminders"><span class="ti t-gold">${ic("bell")}</span><b>${esc(t("reminders"))}</b><span class="num">${esc(week?t("due_week",{n:week}):t("none_due"))}</span></button>
       <button class="tile" data-go="receipts"><span class="ti t-teal">${ic("receipt")}</span><b>${esc(t("receipts"))}</b><span class="num">${esc(expSoon?t("warr_exp",{n:expSoon}):t("receipts_n",{n:S.receipts.length}))}</span></button>
     </div>
+    ${invHomeCard()}
     <button class="ask-bar" data-go="chat">${bot()}<span class="meta"><b>${esc(t("ask"))}</b><span class="muted small">${esc(t("ask_sub"))}</span></span>${ic("chev","chev flip")}</button>
     ${tip?`<div class="card tip">${bot()}<div><b>${esc(t("suggests"))}</b><p>${esc(tip)}</p></div></div>`:""}
     <div class="sec-h"><h2>${esc(t("coming"))}</h2><button class="link" data-go="reminders">${esc(t("see_all"))}</button></div>
@@ -820,6 +912,42 @@ function restCard(full){
     ${R.left<0?`<p class="warn">${esc(t("over_warn",{a:kd(Math.round(-R.left))}))}</p>`:""}
     ${full?`<div class="billchips">${R.bills.length?R.bills.map(r=>`<span>${esc(fdate(r.due,{day:"numeric",month:"short"}))} · ${esc(tx(r.name))} · <b class="num">${esc(kd(r.amount))}</b></span>`).join(""):`<span>${esc(t("no_bills_left"))}</span>`}</div>`:""}
   </div>`;
+}
+/* Investing: example prices (not live) and an affordability check. Thuraya never recommends what to buy. */
+const GOLD={k24:38.5,k22:35.3,k21:33.7};
+const BOURSA={value:8950.4,change:0.62,series:[8790,8805,8798,8830,8846,8821,8860,8874,8851,8889,8902,8896,8917,8931,8912,8928,8944,8925,8941,8950.4]};
+const EMAIL="thuraya.kw@outlook.com";
+function investCheck(){
+  const R=restOfMonth(), T=R.T, nm=nextMonthFree();
+  const cash=Number(S.cash)||0;
+  const safety=Math.round(T.essLim*3);
+  const ef=S.goals.find(g=>g.icon==="piggy"); const safetyGap=Math.max(0,safety-(ef?ef.saved:0));
+  const committed=R.billsAmt+Math.max(0,R.left);
+  const available=Math.max(0,Math.floor((cash-committed-safetyGap)*1000)/1000);
+  const bnplLeft=S.reminders.filter(r=>r.provider).reduce((a,r)=>a+r.amount*((r.of||1)-(r.n||1)+1),0);
+  const overdue=S.reminders.some(r=>daysUntil(r.due)<0);
+  const monthly=Math.max(0,Math.floor(nm.free));
+  const checks=[
+    {ok:!overdue,k:"chk_bills"},
+    {ok:bnplLeft<=S.income*0.5,k:"chk_bnpl",v:{a:kd(Math.round(bnplLeft*1000)/1000)}},
+    {ok:cash-committed>=safetyGap,k:"chk_safety",v:{a:kd(safety)}},
+    {ok:cash-committed>0,k:"chk_cash"}
+  ];
+  const level=overdue?"no":available>=200?"yes":available>0?"part":"no";
+  return {cash,available,monthly,checks,level,safety,overdue};
+}
+function investAnswer(amount,kind){
+  const C=investCheck(); const w=t(kind==="stocks"?"w_stocks":"w_gold"); let level,text;
+  if(C.overdue){ level="no"; text=t("ans_overdue"); }
+  else if(C.available>=amount){ level="yes"; text=t("ans_yes",{a:kd(amount),w,r:kd(Math.round((C.available-amount)*1000)/1000)}); }
+  else if(C.available>0){ level="part"; const m=C.monthly>0?Math.ceil((amount-C.available)/C.monthly):0; text=m?t("ans_part",{r:kd(C.available),a:kd(amount),m}):t("ans_part_nm",{r:kd(C.available)}); }
+  else { level="no"; text=t("ans_no",{a:kd(amount)}); }
+  if(kind!=="stocks") text+=" "+t("gold_note",{g:num(amount/GOLD.k24,1)});
+  return {level,text};
+}
+function invHomeCard(){
+  const C=investCheck();
+  return `<button class="card row" data-go="invest" style="padding:14px 16px"><span class="ri t-gold">${ic("coins")}</span><span class="meta"><b>${esc(t("inv_home"))}</b><span>${esc(t("inv_home_sub"))}</span></span><span class="pill ${C.level==="no"?"p-red":"p-teal"} num">${esc(t("avail_short",{a:kd(Math.floor(C.available))}))}</span>${ic("chev","chev flip")}</button>`;
 }
 function health(){
   const T=totals();
@@ -957,6 +1085,50 @@ function goalExtraTip(g,plan){
     : `Premium tip: ${CAT[c].en} cost you ${kd(v)} this month. Moving a quarter of it covers ${Math.min(100,Math.round(v/4/plan.monthly*100))}% of the monthly amount.`;
 }
 
+function vInvest(){
+  const C=investCheck(); const b=BANKS.find(x=>S.banks.includes(x.id));
+  const V={yes:[t("ready_yes"),"t-teal","check"],part:[t("ready_part"),"t-gold","spark"],no:[t("ready_no"),"t-red","shield"]}[C.level];
+  const kind=ui.invKind||"gold";
+  const s=BOURSA.series, mn=Math.min(...s), mx=Math.max(...s);
+  const pts=s.map((v,i)=>`${(i/(s.length-1)*200).toFixed(1)},${(42-(v-mn)/(mx-mn)*38).toFixed(1)}`).join(" ");
+  return `${header(t("invest"))}
+  <div class="pad content">
+    <div class="card summary"><div class="meta"><div class="eyebrow">${esc(t("balance"))}${b?" · "+esc(b.n):""}</div><div class="big num">${esc(kd(C.cash))}</div></div>${ic("wallet")}</div>
+    <div class="card verdict">
+      <div class="vh"><span class="ri ${V[1]}">${ic(V[2])}</span><div><b>${esc(V[0])}</b><span class="muted small num">${esc(t("can_invest",{a:kd(C.available)}))}</span></div></div>
+      ${C.monthly>0?`<p class="small muted num" style="margin:0">${esc(t("monthly_inv",{a:kd(C.monthly)}))}</p>`:""}
+      <ul class="checks">${C.checks.map(c=>`<li><span class="ck ${c.ok?"ok":"no"}">${ic(c.ok?"check":"x")}</span><span>${esc(t(c.k,c.v))}</span></li>`).join("")}</ul>
+    </div>
+    <form class="card ask-inv" id="invForm">
+      <b>${esc(t("ask_inv"))}</b>
+      <div class="field"><label>${esc(t("inv_in"))}</label><div class="seg" role="group"><button type="button" data-kind="gold" aria-pressed="${kind==="gold"}">${esc(t("gold"))}</button><button type="button" data-kind="stocks" aria-pressed="${kind==="stocks"}">${esc(t("stocks"))}</button></div></div>
+      <div class="field"><label for="invAmt">${esc(t("inv_amount"))}</label><input id="invAmt" type="number" inputmode="decimal" min="0" step="0.001" value="${Number(ui.invAmt)||200}"></div>
+      <button class="btn btn-primary" type="submit">${esc(t("check"))}</button>
+      <div id="invOut" aria-live="polite">${ui.invOut||""}</div>
+    </form>
+    <div class="card asset">
+      <div class="hd"><span class="ri t-gold">${ic("coins")}</span><div class="meta"><b>${esc(t("gold_t"))}</b><span class="muted small">${esc(t("gold_sub"))}</span></div><span class="pill p-mute">${esc(t("example_prices"))}</span></div>
+      <div class="prices">${[["k24",GOLD.k24],["k22",GOLD.k22],["k21",GOLD.k21]].map(([k,v])=>`<div><span>${esc(t(k))}</span><b class="num">${esc(kd3(v))}</b></div>`).join("")}</div>
+      <p class="hint">${esc(t("gold_how"))}</p>
+    </div>
+    <div class="card asset">
+      <div class="hd"><span class="ri t-teal">${ic("trend")}</span><div class="meta"><b>${esc(t("stocks_t"))}</b><span class="muted small">${esc(t("stocks_sub"))}</span></div><span class="pill p-mute">${esc(t("example_prices"))}</span></div>
+      <div style="display:flex;align-items:baseline;gap:10px"><span class="big num">${num(BOURSA.value,1)}</span><span class="pill p-teal num">+${num(BOURSA.change,2)}%</span></div>
+      <svg class="spark" viewBox="0 0 200 46" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="var(--teal)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>
+      <p class="hint">${esc(t("stocks_how"))}</p>
+    </div>
+    <div class="disclaimer">${ic("info")}<span>${esc(t("inv_disc"))}</span></div>
+  </div>`;
+}
+function bindInvest(){
+  const f=document.getElementById("invForm"); if(!f) return;
+  f.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{ ui.invKind=b.dataset.kind; f.querySelectorAll("[data-kind]").forEach(z=>z.setAttribute("aria-pressed",z.dataset.kind===ui.invKind)); }));
+  f.addEventListener("submit",e=>{ e.preventDefault();
+    const a=parseFloat(f.querySelector("#invAmt").value), out=f.querySelector("#invOut");
+    if(!(a>0)){ out.innerHTML=`<p class="err">${esc(t("need_amt"))}</p>`; return; }
+    ui.invAmt=a; const A=investAnswer(a, ui.invKind||"gold");
+    ui.invOut=`<div class="answer ${A.level}">${esc(A.text)}</div>`; out.innerHTML=ui.invOut; });
+}
 function vReminders(){
   const rem=sortedRem(); const due30=rem.filter(r=>daysUntil(r.due)<=30).reduce((a,r)=>a+r.amount,0);
   return `${header(t("reminders"))}
@@ -991,7 +1163,7 @@ function vChat(){
   return `<div class="chat">${statusbar()}
     <div class="ph pad"><button class="icon-btn" data-go="home" aria-label="${esc(t("home"))}">${ic("back","flip")}</button>${bot()}<div class="meta"><b>${esc(t("ask"))}</b><span><i class="live ${ui.aiState==="off"?"off":""}"></i>${esc(status)}</span></div></div>
     <div class="msgs pad" id="msgs">${msgs.map(msgHtml).join("")}</div>
-    <div class="pad"><div class="chips">${["q1","q5","q2","q3","q4"].map(q=>`<button data-act="chip" data-q="${q}">${esc(t(q))}</button>`).join("")}</div></div>
+    <div class="pad"><div class="chips">${["q1","q6","q5","q2","q3","q4"].map(q=>`<button data-act="chip" data-q="${q}">${esc(t(q))}</button>`).join("")}</div></div>
     <form class="composer pad" id="composer"><input id="chatIn" autocomplete="off" placeholder="${esc(t("ph"))}" aria-label="${esc(t("ph"))}"><button class="send" type="submit" aria-label="Send" ${ui.busy?"disabled":""}>${ic("send","flip")}</button></form>
   </div>`;
 }
@@ -1008,6 +1180,7 @@ function vProfile(){
       <div class="field"><label for="pName">${esc(t("name"))}</label><input id="pName" value="${esc(S.name)}" maxlength="30"></div>
       <div class="two"><div class="field"><label for="pInc">${esc(t("income"))}</label><input id="pInc" type="number" inputmode="decimal" min="0" step="0.001" value="${S.income}"></div>
       <div class="field"><label for="pBud">${esc(t("budget_amt"))}</label><input id="pBud" type="number" inputmode="decimal" min="1" step="0.001" value="${S.budget}"></div></div>
+      <div class="field"><label for="pCash">${esc(t("balance_lbl"))}</label><input id="pCash" type="number" inputmode="decimal" min="0" step="0.001" value="${Number(S.cash)||0}"></div>
       <div class="field"><label for="pEss">${esc(t("ess_share"))}: <span id="pEssV" class="num">${S.essPct}%</span></label><input id="pEss" type="range" min="40" max="90" step="5" value="${S.essPct}"></div>
       <button class="btn btn-navy" type="submit">${esc(t("save"))}</button>
     </form>
@@ -1023,6 +1196,20 @@ function vProfile(){
     <div class="sec-h"><h2>${esc(t("bnpl_title"))}</h2></div>
     <div class="card list">${BNPL.map(p=>{const on=(S.bnpl||[]).includes(p.id); return `<div class="bank"><span class="bl" style="background:${p.c}">${esc(p.n.slice(0,2))}</span><span class="meta" style="flex:1"><b>${esc(S.lang==="ar"?p.ar:p.n)}</b><span class="muted small" style="display:block">${esc(t("bnpl_sub"))}</span></span>${on?`<span class="pill p-teal">${esc(t("linked"))}</span>`:`<button class="btn-mini" data-act="bnpl" data-id="${p.id}">${esc(t("connect"))}</button>`}</div>`;}).join("")}</div>
     <p class="hint">${esc(t("bnpl_note"))}</p>
+    <div class="sec-h"><h2>${esc(t("feedback"))}</h2></div>
+    <form class="card form" id="fbForm" style="padding:16px">
+      <div class="seg" role="group"><button type="button" data-fb="suggestion" aria-pressed="${(ui.fbKind||"suggestion")==="suggestion"}">${esc(t("fb_sug"))}</button><button type="button" data-fb="complaint" aria-pressed="${ui.fbKind==="complaint"}">${esc(t("fb_comp"))}</button></div>
+      <div class="field"><label for="fbMsg">${esc(t("fb_msg"))}</label><textarea id="fbMsg" maxlength="1500" placeholder="${esc(t("fb_ph"))}"></textarea></div>
+      <p class="err" id="fbErr" hidden></p>
+      <a class="btn btn-primary" id="fbSend" href="mailto:${EMAIL}">${ic("send","flip")}${esc(t("fb_send"))}</a>
+      <p class="hint">${esc(t("fb_hint",{e:EMAIL}))}</p>
+    </form>
+    <div class="sec-h"><h2>${esc(t("find_us"))}</h2></div>
+    <div class="card list">
+      <div class="contact"><span class="ri t-teal">${ic("mail")}</span><span class="meta"><span>${esc(t("email_l"))}</span><b dir="ltr">${EMAIL}</b></span><button class="btn-mini" data-act="copyEmail">${esc(t("copy"))}</button></div>
+      <div class="contact"><span class="ri t-gold">${ic("chat")}</span><span class="meta"><span>${esc(t("social_l"))}</span><b>${esc(t("social_v"))}</b></span></div>
+      <div class="contact"><a class="btn btn-navy" href="mailto:${EMAIL}?subject=${encodeURIComponent("Hello Thuraya")}">${ic("mail")}${esc(t("write_us"))}</a></div>
+    </div>
     <div class="card" style="padding:14px 16px;display:flex;gap:12px;align-items:center"><span class="ri t-teal">${ic("lock")}</span><p class="small" style="margin:0">${esc(t("security"))}</p></div>
     <button class="btn btn-danger" data-act="reset">${esc(t("reset"))}</button>
   </div>`;
@@ -1052,7 +1239,7 @@ function vPlans(){
 const NAV=[["home","home"],["budget","chart"],["chat",null],["goals","target"],["receipts","receipt"]];
 function nav(){
   return `<nav class="nav" aria-label="Main">${NAV.map(([v,i])=>{
-    const cur = view===v || (v==="home"&&["reminders","profile","plans"].includes(view));
+    const cur = view===v || (v==="home"&&["reminders","profile","plans","invest"].includes(view));
     if(!i) return `<button class="center" data-go="chat" ${view==="chat"?'aria-current="page"':""}><span class="orb">${bot()}</span><span>${esc(t("ask_short"))}</span></button>`;
     return `<button data-go="${v}" ${cur?'aria-current="page"':""}>${ic(i)}<span>${esc(t(v))}</span></button>`;}).join("")}</nav>`;
 }
@@ -1062,10 +1249,11 @@ const app=document.getElementById("app");
 function render(keepScroll){
   applyPrefs();
   const sc=app.querySelector(".scroll"); const y=keepScroll&&sc?sc.scrollTop:0;
-  const V={home:vHome,budget:vBudget,goals:vGoals,reminders:vReminders,receipts:vReceipts,chat:vChat,profile:vProfile,plans:vPlans}[view]||vHome;
+  const V={home:vHome,budget:vBudget,goals:vGoals,reminders:vReminders,receipts:vReceipts,chat:vChat,profile:vProfile,plans:vPlans,invest:vInvest}[view]||vHome;
   if(view==="chat"){ app.innerHTML=`<div class="scroll" style="overflow:hidden">${V()}</div>${nav()}`; bindChat(); }
   else { app.innerHTML=`<div class="scroll">${V()}</div>${nav()}`; const s2=app.querySelector(".scroll"); if(s2) s2.scrollTop=y; }
   if(view==="profile") bindProfile();
+  if(view==="invest") bindInvest();
 }
 function go(v){
   view=v; closeSheet(); document.getElementById("notif").classList.add("hide"); render();
@@ -1262,14 +1450,33 @@ function confirmReset(){
 }
 
 /* ---------- Profile binding ---------- */
+function bindFeedback(){
+  const fb=document.getElementById("fbForm"); if(!fb) return;
+  fb.addEventListener("submit",e=>e.preventDefault());
+  fb.querySelectorAll("[data-fb]").forEach(b=>b.addEventListener("click",()=>{ ui.fbKind=b.dataset.fb; fb.querySelectorAll("[data-fb]").forEach(z=>z.setAttribute("aria-pressed",z.dataset.fb===ui.fbKind)); }));
+  const a=fb.querySelector("#fbSend"), msg=fb.querySelector("#fbMsg"), er=fb.querySelector("#fbErr");
+  if(ui.fbMsg) msg.value=ui.fbMsg;
+  msg.addEventListener("input",()=>{ ui.fbMsg=msg.value; });
+  a.addEventListener("click",e=>{
+    const m=msg.value.trim();
+    if(!m){ e.preventDefault(); er.textContent=t("need_msg"); er.hidden=false; msg.focus(); return; }
+    er.hidden=true;
+    const kind=ui.fbKind==="complaint"?"Complaint":"Suggestion";
+    a.href=`mailto:${EMAIL}?subject=${encodeURIComponent(`Thuraya app: ${kind} from ${S.name}`)}&body=${encodeURIComponent(`${m}\n\n— ${S.name}\nSent from the Thuraya app`)}`;
+    toast(t("fb_toast"));
+  });
+}
 function bindProfile(){
+  bindFeedback();
   const f=document.getElementById("profForm"); if(!f) return;
   const r=f.querySelector("#pEss"); r.addEventListener("input",()=>{f.querySelector("#pEssV").textContent=r.value+"%";});
   f.addEventListener("submit",e=>{e.preventDefault();
     S.name=f.querySelector("#pName").value.trim()||S.name;
     const inc=parseFloat(f.querySelector("#pInc").value); if(inc>=0) S.income=inc;
     const b=parseFloat(f.querySelector("#pBud").value); if(b>0) S.budget=b;
-    S.essPct=parseInt(r.value)||S.essPct; persist(); render(true); toast(t("saved_toast"));});
+    S.essPct=parseInt(r.value)||S.essPct;
+    const cs=parseFloat(f.querySelector("#pCash").value); if(cs>=0) S.cash=cs;
+    persist(); render(true); toast(t("saved_toast"));});
 }
 
 /* ---------- AI (Ask Thuraya) ---------- */
@@ -1294,14 +1501,17 @@ function financeContext(){
     estimateNextMonthFreeCash:Math.round(nm.free),
     upcomingBills:sortedRem().filter(r=>daysUntil(r.due)<=31).map(r=>({name:tx(r.name),amount:r.amount,due:r.due})),
     goals:S.goals.map(g=>{const p=goalPlan(g); return {name:tx(g.name),target:g.target,saved:g.saved,targetDate:g.date,suggestedMonthly:p.monthly||0};}),
-    warranties:S.receipts.filter(r=>r.warranty).map(r=>({item:tx(r.store),expires:warrantyEnd(r)}))
+    warranties:S.receipts.filter(r=>r.warranty).map(r=>({item:tx(r.store),expires:warrantyEnd(r)})),
+    investReadiness:(()=>{ const C=investCheck(); return {accountBalance:C.cash,availableToInvestNow:C.available,monthlyInvestable:C.monthly,safetyNetTarget:C.safety,overdueBills:C.overdue,
+      examplePricesNotLive:{gold24kPerGramKD:GOLD.k24,boursaKuwaitPremierIndex:BOURSA.value}}; })()
   });
 }
 function rules(){
   const langRule = S.lang==="ar" ? "Reply in Kuwaiti Arabic dialect (اللهجة الكويتية), friendly and clear. Write amounts like 150 د.ك." : "Reply in English. Write amounts like KD 150.";
   return `You are Thuraya (ثريا), the personal AI financial assistant inside the Thuraya budgeting app in Kuwait. ${langRule}
 Use the user's data below to answer with concrete numbers. Keep answers short: at most about 110 words, plain text, no markdown headings or bold; short lines starting with "• " are fine.
-Help with budgeting, spending habits, bills, saving goals and warranties. Do not recommend specific stocks, crypto or investment products; for investing questions, suggest a licensed financial advisor.
+Help with budgeting, spending habits, bills, saving goals and warranties.
+If asked whether they can afford to invest (for example in gold or Kuwaiti stocks on Boursa Kuwait), answer from investReadiness: say how much is available now and per month without touching bills or the safety net, and whether a requested amount fits. Never recommend specific stocks, companies, funds or crypto and never predict prices; end such answers with one short line that Thuraya isn't a licensed advisor and that an advisor licensed by Kuwait's Capital Markets Authority can help choose what to buy.
 If the data can't answer the question, say what you'd need.
 
 USER DATA (JSON):
@@ -1310,6 +1520,14 @@ ${financeContext()}`;
 function localAnswer(q){
   const s=q.toLowerCase(); const T=totals(); const nm=nextMonthFree(); const A=S.lang==="ar";
   const cats=Object.entries(T.byCat).sort((a,b)=>b[1]-a[1]);
+  if(/invest|gold|stock|share|boursa|bourse|ذهب|أسهم|اسهم|استثمر|أستثمر|استثمار|بورصة/.test(s)){
+    const sd=s.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
+    const mt=sd.match(/(\d+(?:\.\d+)?)/); const amount=mt?parseFloat(mt[1]):0;
+    const kind=/stock|share|boursa|bourse|أسهم|اسهم|بورصة/.test(s)?"stocks":"gold";
+    if(amount>0) return investAnswer(amount,kind).text+"\n\n"+t("inv_disc_short");
+    const C=investCheck();
+    return t("inv_summary",{a:kd(C.available),m:C.monthly>0?t("inv_summary_m",{a:kd(C.monthly)}):""})+"\n"+C.checks.map(c=>`${c.ok?"✓":"✗"} ${t(c.k,c.v)}`).join("\n")+"\n\n"+t("inv_disc_short");
+  }
   if(/school|supplies|stationery|مدرس|مدارس|قرطاس/.test(s)){
     const g=S.goals.find(x=>x.icon==="backpack"); const p=g?goalPlan(g):null; const rm=S.reminders.find(r=>r.type==="school"); const sp=T.byCat.school||0;
     return A
@@ -1396,7 +1614,13 @@ document.addEventListener("click",e=>{
     case "viewRec": recView(id); break;
     case "delRec": S.receipts=S.receipts.filter(x=>x.id!==id); persist(); closeSheet(); render(true); toast(t("deleted_toast")); break;
     case "chip": if(!ui.busy) ask(t(a.dataset.q)); break;
-    case "lang": S.lang=v; persist(); render(true); break;
+    case "lang": S.lang=v; ui.invOut=""; persist(); render(true); break;
+    case "copyEmail": {
+      const done=()=>toast(t("copied"));
+      const fallback=()=>{ const b=a.closest(".contact").querySelector("b"); const rg=document.createRange(); rg.selectNodeContents(b); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(rg); };
+      try{ navigator.clipboard.writeText(EMAIL).then(done,fallback); }catch(err){ fallback(); }
+      break;
+    }
     case "theme": S.theme=v; persist(); render(true); break;
     case "bank": if(!S.banks.includes(id)) S.banks.push(id); persist(); render(true); toast(t("linked")); break;
     case "billing": ui.billing=v; render(true); break;
@@ -1415,7 +1639,7 @@ document.addEventListener("click",e=>{
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && ui.sheet) closeSheet(); });
 
 /* ---------- Boot ---------- */
-const VIEWS=["home","budget","goals","reminders","receipts","chat","profile","plans"];
+const VIEWS=["home","budget","goals","reminders","receipts","chat","profile","plans","invest"];
 function fromHash(){ const h=(location.hash||"").slice(1); return VIEWS.includes(h)?h:"home"; }
 window.addEventListener("hashchange",()=>{ const v=fromHash(); if(v!==view){ view=v; closeSheet(); document.getElementById("notif").classList.add("hide"); render(); } });
 view=fromHash();
