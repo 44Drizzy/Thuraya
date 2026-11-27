@@ -476,6 +476,43 @@ button.card,.tile,.ask-bar{transition:border-color .2s}
 .legend-row i{border-radius:3px}
 .stack i{border-radius:0}
 .summary .big,.prem-hero b{letter-spacing:-.035em}
+/* ===== Motion: gentle screen entrances, sheets that slide away, press feedback, a chat that types ===== */
+:root{--ease-out:cubic-bezier(.2,.8,.2,1)}
+.scroll.enter{animation:screenIn .32s var(--ease-out) both}
+.scroll.enter .lift > *,.scroll.enter .content > *{animation:itemIn .42s var(--ease-out) both}
+.scroll.enter .lift > :nth-child(2),.scroll.enter .content > :nth-child(2){animation-delay:.04s}
+.scroll.enter .lift > :nth-child(3),.scroll.enter .content > :nth-child(3){animation-delay:.08s}
+.scroll.enter .lift > :nth-child(4),.scroll.enter .content > :nth-child(4){animation-delay:.12s}
+.scroll.enter .lift > :nth-child(5),.scroll.enter .content > :nth-child(5){animation-delay:.16s}
+.scroll.enter .lift > :nth-child(n+6),.scroll.enter .content > :nth-child(n+6){animation-delay:.2s}
+@keyframes screenIn{from{opacity:0}}
+@keyframes itemIn{from{opacity:0;transform:translateY(10px)}}
+.tile,button.card,.btn,.btn-mini,.icon-btn,.ask-bar,.nav button,.chips button,.seg button,.send,.fab{transition:transform .14s var(--ease-out),border-color .2s,background-color .2s,color .2s}
+.tile:active,button.card:active,.btn:active,.btn-mini:active,.icon-btn:active,.ask-bar:active,.nav button:active,.chips button:active,.send:active,.fab:active{transform:scale(.97)}
+.nav button .ic{transition:color .25s}
+.sheet .back{animation:fadeIn .25s ease both}
+.sheet .panel{animation:sheetUp .36s var(--ease-out) both}
+.sheet.closing .back{animation:fadeOut .22s ease both}
+.sheet.closing .panel{animation:sheetDown .24s ease-in both}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes fadeOut{to{opacity:0}}
+@keyframes sheetUp{from{transform:translateY(100%)}}
+@keyframes sheetDown{to{transform:translateY(100%)}}
+.toast{transform:translate(-50%,0);transition:opacity .25s ease,transform .35s var(--ease-out)}
+.toast.hide{transform:translate(-50%,12px)}
+.msg.new{animation:msgIn .34s var(--ease-out) both}
+.msg.me.new{transform-origin:100% 100%}
+.msg.ai.new{transform-origin:0 100%}
+[dir="rtl"] .msg.me.new{transform-origin:0 100%}
+[dir="rtl"] .msg.ai.new{transform-origin:100% 100%}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.96)}}
+.typing{display:inline-flex;gap:5px;padding:4px 2px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--ai-ink);opacity:.35;animation:typingDot 1.3s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.16s}
+.typing i:nth-child(3){animation-delay:.32s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-4px);opacity:.9}}
+.bub .w{animation:wordIn .3s ease both}
+@keyframes wordIn{from{opacity:0}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -612,7 +649,7 @@ en:{
   plan:"Plan", basic:"Basic", free:"Free", upgrade:"Upgrade",
   basic_f1:"Budget and expense tracking", basic_f2:"Bill and installment reminders", basic_f3:"Receipts and warranties", basic_f4:"Ask Thuraya chat",
   prem_f1:"Everything in Basic", prem_f2:"End-of-month forecasts", prem_f3:"Personal savings-goal tips", prem_f4:"Smarter answers from Thuraya",
-  monthly:"Monthly", yearly:"Yearly", per_month:"/ month", per_year:"/ year", save_pct:"Save 44%",
+  monthly:"Monthly", yearly:"Yearly", per_month:"/ month", per_year:"/ year", save_pct:"Save 72%",
   start_prem:"Start Premium", demo_pay:"No payment in this prototype.", on_plan:"Current plan", switch_basic:"Switch to Basic",
   prem_title:"Thuraya Premium", prem_sub:"Plan ahead with forecasts and smarter advice.",
   security:"Your data is encrypted and is never shared without your approval.",
@@ -696,7 +733,7 @@ ar:{
   plan:"الباقة", basic:"الأساسية", free:"مجانية", upgrade:"ترقية",
   basic_f1:"الميزانية وتتبع المصاريف", basic_f2:"تذكير الفواتير والأقساط", basic_f3:"الإيصالات والضمانات", basic_f4:"محادثة اسأل ثريا",
   prem_f1:"كل مميزات الأساسية", prem_f2:"توقعات نهاية الشهر", prem_f3:"نصايح شخصية لأهداف الادخار", prem_f4:"إجابات أذكى من ثريا",
-  monthly:"شهري", yearly:"سنوي", per_month:"/ شهرياً", per_year:"/ سنوياً", save_pct:"وفر ٤٤٪",
+  monthly:"شهري", yearly:"سنوي", per_month:"/ شهرياً", per_year:"/ سنوياً", save_pct:"وفر ٧٢٪",
   start_prem:"ابدأ بريميوم", demo_pay:"ما في دفع في هالنموذج.", on_plan:"باقتك الحالية", switch_basic:"ارجع للأساسية",
   prem_title:"ثريا بريميوم", prem_sub:"خطط لقدّام مع التوقعات ونصايح أذكى.",
   security:"بياناتك مشفرة وما تنشارك أبداً بدون موافقتك.",
@@ -1248,9 +1285,10 @@ function vChat(){
     <form class="composer pad" id="composer"><input id="chatIn" autocomplete="off" placeholder="${esc(t("ph"))}" aria-label="${esc(t("ph"))}"><button class="send" type="submit" aria-label="Send" ${ui.busy?"disabled":""}>${ic("send","flip")}</button></form>
   </div>`;
 }
-function msgHtml(m){
-  if(m.role==="user") return `<div class="msg me"><div class="bub">${esc(m.content)}</div></div>`;
-  return `<div class="msg ai">${bot()}<div class="bub">${esc(m.content)}${m.local&&t("ai_fallback_note")?`<span class="note">${esc(t("ai_fallback_note"))}</span>`:""}</div></div>`;
+function msgHtml(m,isNew){
+  const n=isNew?" new":"";
+  if(m.role==="user") return `<div class="msg me${n}"><div class="bub">${esc(m.content)}</div></div>`;
+  return `<div class="msg ai${n}">${bot()}<div class="bub">${esc(m.content)}${m.local&&t("ai_fallback_note")?`<span class="note">${esc(t("ai_fallback_note"))}</span>`:""}</div></div>`;
 }
 
 function vProfile(){
@@ -1305,7 +1343,7 @@ function vPlans(){
     <div class="seg" role="group"><button data-act="billing" data-v="monthly" aria-pressed="${!yr}">${esc(t("monthly"))}</button><button data-act="billing" data-v="yearly" aria-pressed="${yr}">${esc(t("yearly"))} · ${esc(t("save_pct"))}</button></div>
     <div class="card plan ${prem?"on":""}">
       <div class="hd"><h3>${esc(t("premium"))}</h3>${prem?`<span class="pill p-teal">${esc(t("on_plan"))}</span>`:""}</div>
-      <div><span class="price num">${esc(kd(yr?20:3))}</span> <span class="muted">${esc(yr?t("per_year"):t("per_month"))}</span></div>
+      <div><span class="price num">${esc(kd(yr?20:6))}</span> <span class="muted">${esc(yr?t("per_year"):t("per_month"))}</span></div>
       ${feat(["prem_f1","prem_f2","prem_f3","prem_f4"])}
       ${prem?`<button class="btn btn-ghost" data-act="setPlan" data-v="basic">${esc(t("switch_basic"))}</button>`:`<button class="btn btn-primary" data-act="setPlan" data-v="premium">${esc(t("start_prem"))}</button><p class="hint" style="text-align:center">${esc(t("demo_pay"))}</p>`}
     </div>
@@ -1335,6 +1373,7 @@ function render(keepScroll){
   else { app.innerHTML=`<div class="scroll">${V()}</div>${nav()}`; const s2=app.querySelector(".scroll"); if(s2) s2.scrollTop=y; }
   if(view==="profile") bindProfile();
   if(view==="invest") bindInvest();
+  if(!keepScroll){ const s3=app.querySelector(".scroll"); if(s3) s3.classList.add("enter"); }
 }
 function go(v){
   view=v; closeSheet(); document.getElementById("notif").classList.add("hide"); render();
@@ -1362,7 +1401,12 @@ function openSheet(html, onMount){
   ui.sheet=true; if(onMount) onMount(root.querySelector(".panel"));
   const f=root.querySelector("input,select,button:not(.back)"); if(f) setTimeout(()=>{ try{f.focus({preventScroll:true});}catch(e){} },60);
 }
-function closeSheet(){ root.innerHTML=""; ui.sheet=null; }
+function closeSheet(){
+  const sh=root.querySelector(".sheet"); ui.sheet=null;
+  if(!sh || calm()){ root.innerHTML=""; return; }
+  sh.classList.add("closing");
+  setTimeout(()=>{ if(root.contains(sh)) sh.remove(); },240);
+}
 
 function txSheet(id){
   const x=id?S.txns.find(v=>v.id===id):null;
@@ -1671,15 +1715,36 @@ function bindChat(){
   f.addEventListener("submit",e=>{e.preventDefault(); const q=inp.value.trim(); if(!q||ui.busy) return; inp.value=""; ask(q);});
   getSample().then(s=>{ if(s && ui.aiState==="unknown"){ ui.aiState="on"; refreshChatStatus(); } });
 }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function calm(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){ return false; } }
+/* Reveals a reply word by word, like someone typing. Whole reply takes about 1-1.6 s. */
+async function typeInto(el,text,box){
+  if(calm()){ el.textContent=text; return; }
+  el.textContent="";
+  const parts=text.split(/(\s+)/);
+  const words=parts.filter(p=>p.trim()).length||1;
+  const step=Math.max(16,Math.min(55,1500/words));
+  for(const p of parts){
+    if(!p) continue;
+    if(!p.trim()){ el.appendChild(document.createTextNode(p)); continue; }
+    const w=document.createElement("span"); w.className="w"; w.textContent=p; el.appendChild(w);
+    if(box && box.isConnected) box.scrollTop=box.scrollHeight;
+    await sleep(step);
+  }
+}
 async function ask(q){
   ui.busy=true;
+  const started=performance.now();
   S.chat.push({role:"user",content:q}); S.chat=S.chat.slice(-30); persist();
-  const box=document.getElementById("msgs"); box.insertAdjacentHTML("beforeend", msgHtml({role:"user",content:q}));
-  box.insertAdjacentHTML("beforeend", `<div class="msg ai" id="pending">${bot()}<div class="bub"><span class="typing" aria-label="${esc(t("thinking"))}"><i></i><i></i><i></i></span></div></div>`);
+  const box=document.getElementById("msgs");
+  box.insertAdjacentHTML("beforeend", msgHtml({role:"user",content:q},true));
   box.scrollTop=box.scrollHeight;
   const sendBtn=app.querySelector(".send"); if(sendBtn) sendBtn.disabled=true;
+  if(!calm()) await sleep(350); // a short beat before Thuraya starts typing
+  box.insertAdjacentHTML("beforeend", `<div class="msg ai new" id="pending">${bot()}<div class="bub"><span class="typing" role="status" aria-label="${esc(t("thinking"))}"><i></i><i></i><i></i></span></div></div>`);
+  box.scrollTop=box.scrollHeight;
   const bub=box.querySelector("#pending .bub");
-  let answer=null, local=false;
+  let answer=null, local=false, streamed=false;
   const s = ui.aiState==="off" ? null : await getSample();
   if(s){
     chatCtl=new AbortController();
@@ -1687,7 +1752,7 @@ async function ask(q){
     while(hist.length && hist[0].role!=="user") hist.shift();
     try{
       const r=await s([{role:"user",content:rules()},...hist],{cache:false,modelTier:"quick",signal:chatCtl.signal,onText:({text})=>{ if(bub){ bub.textContent=clean(text); box.scrollTop=box.scrollHeight; } }});
-      answer=clean(r.text); ui.aiState="on";
+      answer=clean(r.text); streamed=true; ui.aiState="on";
     }catch(err){
       if(err && ["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(err.code)) ui.aiState="off";
       answer=null;
@@ -1695,8 +1760,18 @@ async function ask(q){
   } else ui.aiState="off";
   if(!answer && !s) answer=await askServer();
   if(!answer){ answer=localAnswer(q); local=true; }
+  // Let the typing dots show for a natural moment (longer replies "take" a little longer).
+  if(!streamed && !calm()){
+    const wait=1000+Math.min(800,answer.length*3)-(performance.now()-started);
+    if(wait>0) await sleep(wait);
+  }
   S.chat.push({role:"assistant",content:answer,local}); S.chat=S.chat.slice(-30); persist();
-  const pend=document.getElementById("pending"); if(pend) pend.outerHTML=msgHtml({role:"assistant",content:answer,local});
+  const pend=document.getElementById("pending");
+  if(pend){
+    pend.removeAttribute("id");
+    const b=pend.querySelector(".bub");
+    if(streamed) b.textContent=answer; else await typeInto(b,answer,box);
+  }
   ui.busy=false; if(sendBtn) sendBtn.disabled=false; refreshChatStatus();
   const b2=document.getElementById("msgs"); if(b2) b2.scrollTop=b2.scrollHeight;
 }
