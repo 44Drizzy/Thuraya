@@ -1,8 +1,38 @@
-<title>Thuraya ثريا</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Thuraya &#1579;&#1585;&#1610;&#1575;</title>
+<meta name="description" content="Thuraya helps you budget, save for goals, keep up with bills and keep your receipts in one place.">
+<meta name="theme-color" content="#0C2F35">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Thuraya">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
+/* Home-screen app additions: phone safe areas, no zoom on input focus, no bounce. */
+body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+img{max-width:100%}
+[hidden]{display:none!important}
+@media all{
+  .app{padding-top:env(safe-area-inset-top,0px);background:var(--navy)}
+  .app > .scroll{background:var(--bg)}
+  .fab{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+  .notif{top:calc(12px + env(safe-area-inset-top,0px))}
+  .sheet .panel{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))}
+  .sheet .panel{max-height:calc(100% - env(safe-area-inset-top,0px) - 24px)}
+  input,select,textarea{font-size:16px!important}
+}
+</style>
+</head>
+<body><style>
 /* Layout: a phone-sized app (full-screen on phones, framed beside a brand panel on wide screens). Navy = trust, teal = innovation, gold = achievement (from the brand guide). */
 :root{
   --navy:#0C2F35; --navy-2:#0F3238; --teal:#0F3238; --teal-2:#A9A2EE; --teal-soft:#E9EDE6;
@@ -1663,11 +1693,29 @@ async function ask(q){
       answer=null;
     }
   } else ui.aiState="off";
+  if(!answer && !s) answer=await askServer();
   if(!answer){ answer=localAnswer(q); local=true; }
   S.chat.push({role:"assistant",content:answer,local}); S.chat=S.chat.slice(-30); persist();
   const pend=document.getElementById("pending"); if(pend) pend.outerHTML=msgHtml({role:"assistant",content:answer,local});
   ui.busy=false; if(sendBtn) sendBtn.disabled=false; refreshChatStatus();
   const b2=document.getElementById("msgs"); if(b2) b2.scrollTop=b2.scrollHeight;
+}
+/* Live AI on your own website: api/chat.js on Vercel holds the API key and the instructions.
+   The page sends only the language, a summary of this user's numbers and the recent chat.
+   If the function isn't set up (no key) or fails, the chat falls back to the built-in answers. */
+let serverAI = (location.protocol==="https:" || location.hostname==="localhost") ? null : false;
+async function askServer(){
+  if(serverAI===false) return null;
+  const messages=S.chat.slice(-12).filter(m=>!m.local||m.role==="user").map(m=>({role:m.role,content:m.content}));
+  while(messages.length && messages[0].role!=="user") messages.shift();
+  try{
+    const r=await fetch("api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lang:S.lang,context:financeContext(),messages})});
+    if(r.status===404 || r.status===405 || r.status===503){ serverAI=false; return null; }
+    if(!r.ok) return null;
+    const j=await r.json();
+    if(j && typeof j.text==="string" && j.text.trim()){ serverAI=true; ui.aiState="on"; return clean(j.text); }
+    return null;
+  }catch(e){ return null; }
 }
 const clean = s => String(s||"").replace(/\*\*(.+?)\*\*/g,"$1").replace(/^#+\s*/gm,"").trim();
 
@@ -1732,3 +1780,10 @@ else {
 }
 })();
 </script>
+<script>
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+  window.addEventListener("load", function () { navigator.serviceWorker.register("./sw.js").catch(function () {}); });
+}
+</script>
+</body>
+</html>
